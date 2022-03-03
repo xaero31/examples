@@ -1,0 +1,54 @@
+<definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soap/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://soap/" name="SimpleServiceService">
+    <types>
+        <xs:schema xmlns:tns="http://soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+                   targetNamespace="http://soap/">
+            <xs:element name="getModel" type="tns:getModel"/>
+            <xs:element name="getModelResponse" type="tns:getModelResponse"/>
+            <xs:complexType name="getModel">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="getModelResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="tns:simpleModel" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="simpleModel">
+                <xs:sequence>
+                    <xs:element name="number" type="xs:int"/>
+                    <xs:element name="text" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </types>
+    <message name="getModel">
+        <part name="parameters" element="tns:getModel"/>
+    </message>
+    <message name="getModelResponse">
+        <part name="parameters" element="tns:getModelResponse"/>
+    </message>
+    <portType name="SimpleService">
+        <operation name="getModel">
+            <input wsam:Action="http://soap/SimpleService/getModelRequest" message="tns:getModel"/>
+            <output wsam:Action="http://soap/SimpleService/getModelResponse" message="tns:getModelResponse"/>
+        </operation>
+    </portType>
+    <binding name="SimpleServicePortBinding" type="tns:SimpleService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="getModel">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="SimpleServiceService">
+        <port name="SimpleServicePort" binding="tns:SimpleServicePortBinding">
+            <soap:address location="http://localhost:8082/soap"/>
+        </port>
+    </service>
+</definitions>
