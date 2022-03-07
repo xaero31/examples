@@ -1,0 +1,4 @@
+JavaDoc. Most popular commands:
+
+@see com.my.package.Class#method()
+{@link somepackage.SomeClass#someMethod(paramTypes)}

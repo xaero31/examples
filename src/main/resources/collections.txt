@@ -1,0 +1,20 @@
+-	Collections.addAll() работает быстрее чем new ArrayList(args) при чем во много раз
+
+collections list execute time: 9
+constructor list execute time: 6614
+
+constructor list execute time: 6707
+collections list execute time: 2
+
+- В коллекцию полученную Arrays.asList() нельзя добавить элементы через add() - получим UnsupportedOperationException.
+
+- Arrays.asList() может путаться в типах аргументов, если наследование через несколько поколений. Обычно рассматривает
+предка первого поколения в качестве типа коллекции. Workaround - Arrays.<Type>asList(arr);
+
+- HashMap, TreeMap и LinkedHashMap. HashMap, как и HashSet, обеспечивает самую быструю выборку, но с непредсказуемым
+порядком хранения элементов. TreeMap хранит ключи отсортированными по возрастанию, а LinkedHashMap хранит ключи в
+порядке вставки без потери высокой скорости выборки HashMap.
+
+- Collections.shuffle - метод для перемешивания
+
+- contains() in List uses equals()

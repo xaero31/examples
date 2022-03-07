@@ -1,0 +1,1 @@
+- A calling 'return;' in finally block will suppress an exception been throwed in try block

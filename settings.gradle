@@ -1,3 +1,5 @@
 rootProject.name = 'examples'
 include 'soap-jaxws'
+include 'collection'
+include 'sort'
 
