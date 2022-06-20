@@ -1,5 +1,7 @@
 ## Docker files
 '.dockerignore' looks like '.gitignore' and specify files, which we don't want to include in docker container - https://docs.docker.com/engine/reference/builder/#dockerignore-file
+## for creating cluster of containers - https://docs.docker.com/compose/compose-file/
+compose.yaml or docker-compose.yaml
 
 ## example of Dockerfile
 FROM node
@@ -27,3 +29,11 @@ docker kill {container_name}
 ## push and pull image remote to docker account
 docker push {image_name}
 docker pull {image_name}
+## commands for docker compose. up - run in dir with 'compose.yaml' to run everything what is described in compose file
+docker-compose up
+## to specify which service could run first
+docker-compose up -d {first_service_name}
+## to read logs from container
+docker logs {container_name}
+## stop all of the containers
+docker-compose stop
