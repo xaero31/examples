@@ -1,0 +1,29 @@
+## Docker files
+'.dockerignore' looks like '.gitignore' and specify files, which we don't want to include in docker container - https://docs.docker.com/engine/reference/builder/#dockerignore-file
+
+## example of Dockerfile
+FROM node
+WORKDIR /usr/scr/app
+COPY somefile*.json ./
+RUN npm install
+COPY . .
+EXPOSE 8080
+CMD ["npm", "start"]
+
+## docker build image
+docker build -t username/app-name .
+## list of docker images
+docker images
+## remove image
+docker rmi {image_id}
+## run container
+docker run -p {port_number_in_container}:{port_number_locally_on_pc} username/app-name
+## list of running containers
+docker ps
+## stop docker container
+docker stop {container_name}
+## stop stucked docker container
+docker kill {container_name}
+## push and pull image remote to docker account
+docker push {image_name}
+docker pull {image_name}
