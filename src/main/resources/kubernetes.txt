@@ -1,0 +1,12 @@
+## info about installing kubernetes - https://kubernetes.io/docs/tasks/tools/
+## watch info about installed kubernetes
+kubectl version --client
+## kubernetes just an orchestrator, but for use it at least for learning or testing purposes we need to install a cluster implementation. 'minikube' for example - https://minikube.sigs.k8s.io/docs/start/
+## cmd to start installed cluster
+minikube start
+## check kubernetes cluster
+kubectl cluster-info
+## add container to cluster
+kubectl create deployment {app_name} --image={image_name}
+## see active deployments
+kubectl get deployments
