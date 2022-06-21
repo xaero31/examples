@@ -37,3 +37,5 @@ docker-compose up -d {first_service_name}
 docker logs {container_name}
 ## stop all of the containers
 docker-compose stop
+## build all images in docker-compose file
+docker-compose build
