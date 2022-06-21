@@ -1,0 +1,8 @@
+## to init docker swarm cluster. in response in cmd we will get token with which we can add another node to this swarm cluster
+docker swarm init
+## see info with running swarms included
+docker info
+## see list of nodes
+docker node ls
+## some command, but I forgot for what
+docker stack deploy -c docker-compose.yaml
