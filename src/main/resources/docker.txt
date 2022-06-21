@@ -31,8 +31,8 @@ docker push {image_name}
 docker pull {image_name}
 ## commands for docker compose. up - run in dir with 'compose.yaml' to run everything what is described in compose file
 docker-compose up
-## to specify which service could run first
-docker-compose up -d {first_service_name}
+## to specify which service could run first (detached from other services, just only one service in this command)
+docker-compose up -d {service_name}
 ## to read logs from container
 docker logs {container_name}
 ## stop all of the containers
