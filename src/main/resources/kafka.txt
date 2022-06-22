@@ -1,0 +1,27 @@
+## kafka has topics, partitions, cluster of brokers (up to 100)
+## each partition has their own queue of messages with order. (message's place in order calls offset)
+## kafka cluster has replication factor which determine how many copies of partitions will be created (good practice is 3)
+## kafka replicas have strictly 1 leader and other replicas are just synced copies
+
+## kafka has receive acknowledgement modes:
+##    acks=0 - producer won't wait
+##    acks=1 - producer will wait for leader acknowledgement
+##    acks=all - producer will wait for leader and replicas acknowledgement
+
+## producer can send key with message
+## if key==null, messages go to partitions by round-robin
+## messages with the same key will go to the same partition
+
+## consumers are united in consumer groups
+## 2 consumers can read 3 partitions (1-2 & 1-1), but if we have 3 consumers and 2 partitions - one consumer will be inactive
+## each partition has consumer offset, which guarantees continuous reading if one of consumers will go down
+## consumer chooses when to commit offset
+##    - at most once (commit only when message is received, if error - message will not be read repeatedly)
+##    - at least once (commit after message is processed, if error - message will be read repeatedly)
+##    - exactly once (could be used only from kafka to kafka with Kafka Streams API)
+
+## every kafka broker is called a 'bootstrap server'
+## each broker knows about each other broker, each topic and each partition
+## client is connecting, getting metadata and then connecting to required broker
+
+## cluster managed by zookeeper
