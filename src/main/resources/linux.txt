@@ -1,0 +1,10 @@
+## run all commands written in target file
+source {file} {options}
+## script with root startup linux commands for all users
+/etc/rc.d/rc.local
+## /etc/init.d/ - directory with scripts for services and etc.
+## crontab file - file with commands for daemon, which reacts to events in system
+## edit crontab file
+sudo crontab -e
+## add command on system startup
+@reboot {command}
