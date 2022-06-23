@@ -25,3 +25,25 @@
 ## client is connecting, getting metadata and then connecting to required broker
 
 ## cluster managed by zookeeper
+
+## after install we need to specify a directory for temporary zookeeper files for not using a default one. we can do it in config/zookeeper.properties relative to kafka dir
+## to start zookeeper on linux from kafka folder. we need to specify a config for that in cmd
+bin/zookeper-service-start.sh config/zookeeper.properties
+## also we need to specify a directory for kafka logs for not using a default one. we can do it in config/server.properties file by specifying a log.dirs param
+## command to launch kafka
+kafka-server-start.sh config/server.properties
+## command with help msg
+kafka-topics
+## create topic. partitions required, replication-factor required, replication-factor cannot be higher than count of available brokers
+kafka-topics --zookeeper 127.0.0.1:2181 --topic first_topic --create --partitions 3 --replication-factor 1
+## watch list of topics
+kafka-topics --zookeeper 127.0.0.1:2181 --list
+## watch detail info about topic
+kafka-topics --zookeeper 127.0.0.1:2181 --topic first_topic --describe
+## delete topic
+kafka-topics --zookeeper 127.0.0.1:2181 --topic first_topic --delete
+
+## send message to kafka topic
+kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic
+## additional params to send message cmd - '--producer-property acks=all' set acknowledge mode
+## if we send msg to not existing topic - it will create with default params. we can change default count of partitions in service.properties, for example
