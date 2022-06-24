@@ -47,3 +47,21 @@ kafka-topics --zookeeper 127.0.0.1:2181 --topic first_topic --delete
 kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic
 ## additional params to send message cmd - '--producer-property acks=all' set acknowledge mode
 ## if we send msg to not existing topic - it will create with default params. we can change default count of partitions in service.properties, for example
+
+## consume new messages since connect
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic
+## consume all of topic messages
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning
+## specify group for consumer
+kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --group example_group
+
+## if to one topic connected 2 consumers of same group and 1 consumer without group - then all messages (for example, 5) will send by the next way:
+## 5 messages will split to 2 consumers from group and another copy of 5 messages will be sent to consumer without group
+## if one consumer will connect with group and will read messages from beginning and after that to topic will connect another consumer from the same group, the new consumer will not read anything, because messages to this group are already read
+
+## list of created consumer groups at bootstrap server
+kafka-consumer-groups --bootstrap-server localhost:9092 --list
+## detail data about group with info about all of the consumers at each partition and topic and with all offsets
+kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group example_group
+## reset offsets for group (consumers should be inactive)
+kafka-consumer-groups --bootstrap-server localhost:9092 --group example_group --reset-offsets --to-earliest --execute --topic first_topic
