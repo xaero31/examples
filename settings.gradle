@@ -3,4 +3,4 @@ include 'soap-jaxws'
 include 'collection'
 include 'sort'
 include 'spring-data'
-
+include 'kafka'
