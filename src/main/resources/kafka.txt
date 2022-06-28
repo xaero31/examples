@@ -66,6 +66,14 @@ kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group examp
 ## reset offsets for group (consumers should be inactive)
 kafka-consumer-groups --bootstrap-server localhost:9092 --group example_group --reset-offsets --to-earliest --execute --topic first_topic
 
+## create config commands for topics, brokers etc.
+## see info about topic config
+kafka-configs --zookeeper 127.0.0.1:2181 --entity-type topics --entity-name {topic_name} --describe
+## add config to a topic
+kafka-configs --zookeeper 127.0.0.1:2181 --entity-type topics --entity-name {topic_name} --add-config min.insync.replicas=2 --alter
+## remove config from a topic
+kafka-configs --zookeeper 127.0.0.1:2181 --entity-type topics --entity-name {topic_name} --delete-config min.insync.replicas --alter
+
 ## kafka ack params. this means that if 'acks=all', we will get response from broker when at lease 2 ISR (including leader) will say that they got data
 min.insync.replicas=2
 ## param to parallel produce requests per partition. Default = 5. param as 1 for ordering can be used for kafka <= 1.1
@@ -103,3 +111,14 @@ compression.type
 ## 'session.timeout.ms' - consumer heartbeat delay before disconnect. default 10 sec
 ## 'heartbeat.interval.ms' - obviously. default 3 sec
 ## 'max.poll.interval.ms' - max interval before polls to understand that consumer is dead. default 5 min
+
+## partition params:
+## 'log.segment.bytes' - size of log segment. default 1gb
+## 'log.segment.ms' - time after which partition will create new log, in in duration of this time no new records arrived to opened segment. default 1 week
+
+## kafka cleanup
+## 'log.cleanup.policy' - cleaning strategy. default = delete. deleting based on age of data. default - week. and based on a size of a log. default is '-1' which equals infinite
+## policy 'compact' used for offsets topics. delete based on keys. delete duplicates after the active segment is committed. compact policy holds last version of value for each key, a.k.a. snapshot. 'delete.retention.ms' - time on which consumers still see deleted messages, which marked for delete. 'min.cleanable.dirty.ratio' default 0.5 - how often call compaction
+## cleaner checks for work for every 15 seconds by default. 'log.cleaner.backoff.ms'
+## 'log.retention.hours' - number of hours to keep data for. default 168 (week)
+## 'log.retention.bytes' - max bytes of data for each partition. default '-1'. if set to fixed value - we will have rotating files with data. deleting older, creating newer.
