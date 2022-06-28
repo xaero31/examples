@@ -65,3 +65,41 @@ kafka-consumer-groups --bootstrap-server localhost:9092 --list
 kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group example_group
 ## reset offsets for group (consumers should be inactive)
 kafka-consumer-groups --bootstrap-server localhost:9092 --group example_group --reset-offsets --to-earliest --execute --topic first_topic
+
+## kafka ack params. this means that if 'acks=all', we will get response from broker when at lease 2 ISR (including leader) will say that they got data
+min.insync.replicas=2
+## param to parallel produce requests per partition. Default = 5. param as 1 for ordering can be used for kafka <= 1.1
+max.in.flight.requests.per.connection
+
+## kafka >= 0.11 has idempotent producer, which will not commint duplicate message if ack didn't went back in cause of network issues, for example. kafka is smart enough to read message id, which is already commited, not commit it again, but send ack back in second try
+enable.idempotence=true
+
+## 'safe producer' summary (can impact to latency):
+## kafka < 0.11:
+acks=all
+min.insync.replicas=1
+retries=MAX_INT
+max.in.flight.requests.per.connection=1
+## kafka >= 0.11. params below imply that acks=all, retries=MAX_INT, max.in.flight.requests.per.connection=5 (default value)
+enable.idempotence=true
+min.insync.replicas=2
+
+## kafka message compression. next param has available values: ["none", "gzip", "lz4", "snappy"]. "none" is default. "snappy" is good for text and has good balance of CPU / compression ratio.
+compression.type
+
+## 'linger.ms' - number of ms which kafka will wait before send a batch. default is '0'. we can, for example, add 'linger.ms=5', we will not got a big amount of lags, but will increase a chance that kafka will wait for some additional messages for the batch and this way we are increasing the throughput.
+## 'batch.size' - size of a batch (obviously :D). default is 16kb. advice from linkedin is to set batch size to 32 or 64 kb. batch size is setted by partition. value usually sets in bytes.
+
+## producer can send messages faster than broker can take. then we can use the 'buffer.memory' which will collect messages to a buffer (obviously :D). default buffer size is 32 mb.
+## if buffer is full, '.send()' method will block the producer. and here we can specify a 'max.block.ms' parameter which will set the block time for producer before getting an exception. default value is '60000'.
+
+## consumer params:
+## 'fetch.min.bytes' - minimum bytes for fetching on consumer poll event. can increase to increase throughput. default value 1
+## 'max.poll.records' - maximum messages for one poll. default 500. can increase if messages are very small
+## 'max.partitions.fetch.bytes' - obviously. default 1mb
+## 'fetch.max.bytes' - obviously. default 50mb
+## 'enable.auto.commit' - true or false. if false - we could commit offsets manually. true is default
+## 'offset.retention.minutes' - time after which disconnected consumers will lost their offsets
+## 'session.timeout.ms' - consumer heartbeat delay before disconnect. default 10 sec
+## 'heartbeat.interval.ms' - obviously. default 3 sec
+## 'max.poll.interval.ms' - max interval before polls to understand that consumer is dead. default 5 min
