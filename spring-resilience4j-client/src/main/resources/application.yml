@@ -1,0 +1,17 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: resilience4j-client
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8888/eureka
+
+# specify custom timeout duration for specific time limiter
+resilience4j.timelimiter:
+  instances:
+    hystrix-service:
+      timeoutDuration: 2s
