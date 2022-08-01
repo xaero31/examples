@@ -1,0 +1,10 @@
+java 9 features:
+
+# jigsaw modules: https://openjdk.java.net/projects/jigsaw/quick-start
+
+# enable logging gc on startup (can to turn on logging of any other parts of jvm)
+# -Xlog:help will output possible options and examples
+java -Xlog:gc=debug:file=gc.txt:none
+
+# Reactive Streams Publish-Subscribe framework support
+java.util.concurrent.Flow - class
