@@ -50,3 +50,23 @@ java -Xshare:on -XX:+UseAppCDS -XX:SharedArchiveFile=hello.jsa -cp hello.jar Hel
 # 'java.security.{Certificate,Identity,IdentityScope,Signer}' marked to remove
 
 # 'java -version' now contains release date
+
+
+java 11 features:
+
+# nest based access control: https://www.baeldung.com/java-11-new-features#7-nest-based-access-control
+# now we don't need to compile java file to run the class - 'java HelloWorld.java'
+
+# new garbage collector no-op 'epsilon'. in fact it doesn't collect any garbage and added for simulating out of memory errors
+-XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC
+
+# Java Flight Recorder now is open-source in OpenJDK: https://www.baeldung.com/java-flight-recorder-monitoring
+# to start 120sec recording:
+-XX:StartFlightRecording=duration=120s,settings=profile,filename=java-demo-app.jfr
+# to analyse and visualize we can use JDK Mission Control
+
+# Java EE and CORBA completely removed
+
+# JDK Mission Control is now as separated download (like JavaFX too)
+# Nashorn deprecated
+# experimental low-latency ZGC garbage collector
