@@ -8,3 +8,45 @@ java -Xlog:gc=debug:file=gc.txt:none
 
 # Reactive Streams Publish-Subscribe framework support
 java.util.concurrent.Flow - class
+
+
+java 10 features:
+
+# performance improvements: https://www.baeldung.com/java-10-performance-improvements
+# full GC for G1 garbage collector (which is default since java 9) became parallel instead of single threaded
+
+# application class-data sharing: https://www.baeldung.com/java-10-performance-improvements#application-class-data-sharing
+# this command will dump the classes loaded by the HelloWorld application into hello.lst
+java -Xshare:off -XX:+UseAppCDS -XX:DumpLoadedClassList=hello.lst -cp hello.jar HelloWorld
+# this command creates archive with dumped classes into hello.jsa file
+java -Xshare:dump -XX:+UseAppCDS -XX:SharedClassListFile=hello.lst -XX:SharedArchiveFile=hello.jsa -cp hello.jar
+# this command starts the HelloWorld application with hello.jsa as input
+java -Xshare:on -XX:+UseAppCDS -XX:SharedArchiveFile=hello.jsa -cp hello.jar HelloWorld
+
+# new experimental JIT compiler for HotSpot JVM - Graal. used for linux x64 platforms. command to activate:
+-XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler
+
+# JVM now is container-aware. now supports linux platforms only. this can extract container-specific configurations
+# some additional command-line options:
+
+# disable container-awareness
+-XX:-UseContainerSupport
+
+# specify the number of CPUs which JVM will use in container
+-XX:ActiveProcessorCount=count
+
+# memory options
+-XX:InitialRAMPercentage
+-XX:MaxRAMPercentage
+-XX:MinRAMPercentage
+
+# root certificates: https://www.baeldung.com/java-10-overview#root-certificates
+
+# 'javah' removed. use 'javac -h' instead
+# 'policytool' removed
+# 'java -Xprofoption' removed. use 'jmap' tool instead
+
+# 'java.security.acl' marked to remove. replaced by 'java.security.Policy'
+# 'java.security.{Certificate,Identity,IdentityScope,Signer}' marked to remove
+
+# 'java -version' now contains release date
