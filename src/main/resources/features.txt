@@ -70,3 +70,12 @@ java 11 features:
 # JDK Mission Control is now as separated download (like JavaFX too)
 # Nashorn deprecated
 # experimental low-latency ZGC garbage collector
+
+
+java 13 features:
+
+# create class-data sharing archive on app exit
+java -XX:ArchiveClassesAtExit=<archive filename> -cp <app jar> AppName
+
+# refactored Socket API impl to NioSocketImpl. for using old version:
+-Djdk.net.usePlainSocketImpl
