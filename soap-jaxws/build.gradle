@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'uk.co.boothen.gradle.wsimport' version '0.11' // for java 8. since 0.12 it's for java 11
+    id 'uk.co.boothen.gradle.wsimport' version '0.18' // since 0.12 it's for java 11
 }
 
 group 'org.example'
@@ -17,16 +17,18 @@ sourceSets {
 }
 
 dependencies {
+    implementation 'javax.xml.ws:jaxws-api:2.3.1'
+    implementation 'com.sun.xml.ws:jaxws-rt:4.0.0'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
-task wsimport (type: uk.co.boothen.gradle.wsimport.WsImport) {
-
+wsimport {
     generatedSourceRoot = 'generated/sources/main/java/'
     generatedClassesRoot = 'classes/main'
 
-    ['SimpleService'].each {service ->
+    ['SimpleService'].each { service ->
         wsdl("${service}.wsdl") {
             packageName('client.' + service.toLowerCase())
         }
@@ -37,5 +39,3 @@ task wsimport (type: uk.co.boothen.gradle.wsimport.WsImport) {
 test {
     useJUnitPlatform()
 }
-
-compileJava.dependsOn wsimport
