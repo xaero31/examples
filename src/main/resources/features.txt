@@ -86,3 +86,8 @@ java 14 features:
 # jlink to create executable images (read 'apps') for windows or macos: https://www.baeldung.com/jlink
 # zgc garbage collector in experimental stage for windows and macos
 # java flight recorder now can stream data
+
+
+java 15 features:
+
+# zgc and shenandoah will be no longer be experimental
