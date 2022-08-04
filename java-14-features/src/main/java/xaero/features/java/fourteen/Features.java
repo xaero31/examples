@@ -13,6 +13,7 @@ public class Features {
     }
 
     private void additionalStackTraceInfoOnNpe() {
+        System.out.println("====== invoke npe info method ======");
         final String value = null;
         System.out.println(value.length());
     }
