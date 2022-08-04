@@ -1,7 +1,7 @@
-package xaero.features.java.fifteen;
+package xaero.features.java.seventeen;
 
 /**
- * briefly view of some java 15 features
+ * briefly view of some java 17 features
  */
 public class Features {
 

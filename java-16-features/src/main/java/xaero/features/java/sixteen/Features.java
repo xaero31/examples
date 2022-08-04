@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import static java.lang.ClassLoader.getSystemClassLoader;
 
 /**
- * briefly view of some java 11 features
+ * briefly view of some java 16 features
  */
 public class Features {
 

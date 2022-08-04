@@ -1,7 +1,7 @@
 package xaero.features.java.fourteen;
 
 /**
- * briefly view of some java 11 features
+ * briefly view of some java 14 features
  */
 public class Features {
 

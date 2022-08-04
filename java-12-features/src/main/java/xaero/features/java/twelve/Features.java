@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
- * briefly view of some java 11 features
+ * briefly view of some java 12 features
  */
 public class Features {
 
