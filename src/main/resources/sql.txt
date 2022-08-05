@@ -1,0 +1,2 @@
+# free resource for creating database architecture
+https://app.quickdatabasediagrams.com/
