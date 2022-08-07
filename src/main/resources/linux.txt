@@ -23,7 +23,7 @@ Description=Simple app
 
 [Service]
 WorkingDirectory=/opt/jars
-ExecStart=/bin/java -Xms128m -Xmx256m -jar wiktionary.jar --server.port=8081 --spring.config.location=classpath:/application.yaml,file:/opt/jars/app.yaml
+ExecStart=/bin/java -Xms128m -Xmx256m -jar app.jar --server.port=8081 --spring.config.location=classpath:/application.yaml,file:/opt/jars/app.yaml
 User=jvmapps
 Type=simple
 Restart=on-failure
