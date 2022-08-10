@@ -8,3 +8,26 @@ source {file} {options}
 sudo crontab -e
 ## add command on system startup
 @reboot {command}
+
+
+## to add java jar as systemctl service:
+1. /etc/systemd/system create new *.service file with desctiption
+2. sudo systemctl daemon-reload
+3. sudo systemctl start *.service
+4. sudo systemctl enable *.service
+
+## example of service file:
+
+[Unit]
+Description=Simple app
+
+[Service]
+WorkingDirectory=/opt/jars
+ExecStart=/bin/java -Xms128m -Xmx256m -jar app.jar --server.port=8081 --spring.config.location=classpath:/application.yaml,file:/opt/jars/app.yaml
+User=jvmapps
+Type=simple
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
