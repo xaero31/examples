@@ -1,0 +1,27 @@
+# hibernate with spring. few sufficient moments
+
+# L2 hibernate cache strategies:
+# - read only (obviously)
+# - non strict read write (can be a gap, when cache is not updated, but in db already new data)
+# - read write (put soft lock on entity at updating, so concurrent access will go to db for fresh data when entity
+#   is locked in cache)
+# - transactional (used for distributed XA transactions. updates entity in parallel in cache and in transaction
+#   at the same time, rollbacks it too if need)
+
+# Transaction propagation (using both in javax.persistence.Transactional and springframework.Transactional)
+# - required (default propagation. use existing transaction or creates new. if existing is invalid - throws exception)
+# - supports (if transaction exists - use it, otherwise invoke method without a transaction)
+# - mandatory (if transaction exists - use it, otherwise throw an exception)
+# - never (throws an exception if transaction exists)
+# - not supported (if a transaction exists, suspends it and invoke method without the transaction, this way all of
+#   outer transaction cannot commit changes)
+# - requires new (suspend transaction if exists and creates new one)
+# - nested (if transaction exists - create a save point. if not - works as 'required')
+
+# Transaction isolation
+# - default (using RDBMS isolation level. if we don't want to mix isolation levels in method chain, we could set
+#   TransactionManager::setValidateExistingTransaction to true)
+# - read uncommitted (allows dirty read from concurrent uncommitted data)
+# - read committed (allows repeatable read, but not dirty read)
+# - repeatable read (allows phantom read, but prevents repeatable read)
+# - serializable (highest level of isolation, but executes concurrent calls sequentially)
