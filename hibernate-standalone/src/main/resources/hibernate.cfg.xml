@@ -2,9 +2,21 @@
 <!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+        <!-- Some logging -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <!-- Enable L2 cache -->
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.region.factory_class">
+            org.hibernate.cache.ehcache.internal.EhcacheRegionFactory
+        </property>
+        <!-- Enable query cache. Useful for frequently HQL query for entities which extremely rarely change -->
+        <!-- Query for collections caches only ids. In that case it is recommended to enable L2 cache for collection -->
+        <!-- Query with dynamic parameters creates cache for each combination -->
+        <property name="hibernate.cache.use_query_cache">true</property>
+        <!-- Connection parameters -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <!-- Assume test is the database name -->
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/telegrambot</property>
         <property name="hibernate.connection.username">xaero</property>
         <property name="hibernate.connection.password">admin</property>

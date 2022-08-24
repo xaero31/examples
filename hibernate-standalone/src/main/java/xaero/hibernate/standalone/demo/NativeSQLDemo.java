@@ -1,6 +1,7 @@
 package xaero.hibernate.standalone.demo;
 
 import lombok.extern.java.Log;
+import org.hibernate.SQLQuery;
 import xaero.hibernate.standalone.model.Message;
 
 import static xaero.hibernate.standalone.provider.SessionFactoryProvider.getSessionFactory;
@@ -22,6 +23,11 @@ public class NativeSQLDemo {
         try (final var session = getSessionFactory().openSession()) {
             final var sql = "SELECT * FROM hibernate.messages WHERE id > :id";
             final var nativeQuery = session.createNativeQuery(sql, Message.class);
+            /*
+             select doesn't invalidate L2 cache, but if in this query will be an update native sql - we need to add
+             an entity class to prevent L2 cache invalidation
+            */
+            nativeQuery.unwrap(SQLQuery.class).addSynchronizedEntityClass(Message.class);
             nativeQuery.setParameter("id", 400);
 
             final var resultList = nativeQuery.getResultList();

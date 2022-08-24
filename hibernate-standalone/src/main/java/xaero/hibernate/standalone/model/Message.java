@@ -3,12 +3,14 @@ package xaero.hibernate.standalone.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "messages", schema = "hibernate")
@@ -37,7 +39,7 @@ public class Message {
              */
     )
     private int id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, updatable = false)
     private User author;
     @Column(name = "message", nullable = false)

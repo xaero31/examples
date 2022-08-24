@@ -13,7 +13,7 @@ public class Application {
 //        runSimpleSessionMethodsDemo();
 //        runSessionQueryDemo();
 //        runCriteriaAPIDemo();
-        runNativeSQLDemo();
+//        runNativeSQLDemo();
     }
 
     private static void runSimpleSessionMethodsDemo() {
@@ -39,6 +39,7 @@ public class Application {
 
         queryDemo.selectMessages();
         queryDemo.updateMessages();
+        queryDemo.selectFromSecondLevelCacheDemo();
     }
 
     private static void runCriteriaAPIDemo() {
