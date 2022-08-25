@@ -23,6 +23,7 @@ public class Application {
 
         simpleMethodsDemo.saveMessage();
         simpleMethodsDemo.saveWithoutTransaction();
+        simpleMethodsDemo.saveWithFlushWithoutTransaction();
         simpleMethodsDemo.rollbackSaveMessage();
 
         simpleMethodsDemo.removeTransientMessage();

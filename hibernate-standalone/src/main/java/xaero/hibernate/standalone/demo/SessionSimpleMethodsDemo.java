@@ -69,6 +69,16 @@ public class SessionSimpleMethodsDemo {
         }
     }
 
+    public void saveWithFlushWithoutTransaction() {
+        try (final var session = getSessionFactory().openSession()) {
+            final var author = new User(1, null, null);
+            final var message = new Message(0, author, "msg without transaction with flush", null);
+
+            session.save(message);
+            session.flush(); // flush required transaction anyway
+        }
+    }
+
     /**
      * it works by finding message by message id
      */

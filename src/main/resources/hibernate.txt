@@ -25,3 +25,14 @@
 # - read committed (allows repeatable read, but not dirty read)
 # - repeatable read (allows phantom read, but prevents repeatable read)
 # - serializable (highest level of isolation, but executes concurrent calls sequentially)
+
+# Pessimistic locks
+# - pessimistic read (obtain shared lock and prevent data from being updated or deleted)
+# - pessimistic write (obtain exclusive lock and prevent data from being updated, deleted or read)
+# - pessimistic force increment (works like pessimistic write, but also increments version at versioned entities. if
+#   persistence provider doesn't support this lock then persistenceException will be thrown)
+
+# Pessimistic lock scope
+# - normal (locks entity itself. when used with joined inheritance - also locks the ancestors)
+# - extended (works as normal but in addition locks joined entities too. for example one to many or element collection)
+# not all persistence providers support lock scopes

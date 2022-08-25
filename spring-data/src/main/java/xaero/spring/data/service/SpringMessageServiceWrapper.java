@@ -49,4 +49,9 @@ public class SpringMessageServiceWrapper {
         messageService.saveWithNested(message);
         messageService.saveWithSupports(new SpringMessage(0, "save after 'nested'"));
     }
+
+    @Transactional
+    public SpringMessage findWithLock(long id) {
+        return messageService.findWithLock(id);
+    }
 }

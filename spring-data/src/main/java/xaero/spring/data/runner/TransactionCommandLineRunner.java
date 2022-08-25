@@ -18,7 +18,7 @@ public class TransactionCommandLineRunner implements CommandLineRunner {
     private final SpringMessageServiceWrapper wrapper;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // clear table before experiments
         Try.run(messageService::deleteAll);
 
@@ -26,7 +26,8 @@ public class TransactionCommandLineRunner implements CommandLineRunner {
         Try.run(() -> messageService.saveMessageWithException(new SpringMessage(0, "message with exception")));
 
         // will save in db successfully
-        Try.run(() -> messageService.saveMessage(new SpringMessage(0, "message without exception")));
+        final var messageId = Try.of(() -> messageService.saveMessage(
+                new SpringMessage(0, "message without exception"))).get();
 
         // will not save in db because doesn't have transaction for writing
         Try.run(() -> messageService.saveWithSupports(new SpringMessage(0, "message with supports")));
@@ -59,5 +60,25 @@ public class TransactionCommandLineRunner implements CommandLineRunner {
 
         // spring jpa transaction manager support nested transaction only with jdbc
         Try.run(() -> wrapper.saveWithNested(new SpringMessage(0, "message with nested")));
+
+        // required transaction, will throw TransactionRequiredException
+        Try.of(() -> messageService.findWithLock(messageId))
+                .onFailure(e -> log.error("error find with lock", e))
+                .onSuccess(message -> log.info("found with lock [{}]", message.getMessage()));
+
+        // with transaction works correctly
+        Try.of(() -> wrapper.findWithLock(messageId))
+                .onFailure(e -> log.error("error find with wrapper lock", e))
+                .onSuccess(message -> log.info("found with wrapper lock [{}]", message.getMessage()));
+
+        // required transaction, will throw TransactionRequiredException
+        Try.of(() -> messageService.findWithQueryLock(messageId))
+                .onFailure(e -> log.error("error find with query lock", e))
+                .onSuccess(message -> log.info("found with query lock [{}]", message.getMessage()));
+
+        // required transaction, will throw TransactionRequiredException
+        Try.of(() -> messageService.findWithResultLock(messageId))
+                .onFailure(e -> log.error("error find with result lock", e))
+                .onSuccess(message -> log.info("found with result lock [{}]", message.getMessage()));
     }
 }
