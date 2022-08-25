@@ -24,4 +24,6 @@ public class SpringMessage {
     private long id;
     @Column(name = "message", nullable = false)
     private String message;
+    @Version
+    private long version;
 }

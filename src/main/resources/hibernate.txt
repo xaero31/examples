@@ -36,3 +36,9 @@
 # - normal (locks entity itself. when used with joined inheritance - also locks the ancestors)
 # - extended (works as normal but in addition locks joined entities too. for example one to many or element collection)
 # not all persistence providers support lock scopes
+
+# Optimistic locks
+# - optimistic / read (obtains lock for all entities which have a version attribute)
+# - optimistic force increment / write (works as optimistic but increment a version)
+# JPA recommends to use 'optimistic' and 'optimistic force increment' instead of 'read' and 'write' in new apps
+# if version attribute differs to commit transaction stage, for example, JPA will throw an OptimisticLockException
