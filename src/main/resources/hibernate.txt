@@ -42,3 +42,9 @@
 # - optimistic force increment / write (works as optimistic but increment a version)
 # JPA recommends to use 'optimistic' and 'optimistic force increment' instead of 'read' and 'write' in new apps
 # if version attribute differs to commit transaction stage, for example, JPA will throw an OptimisticLockException
+
+# ACID
+# - atomicity (apply all changes or no one of changes)
+# - consistency (db should be in a valid state before and after transaction)
+# - isolation (no one transaction should know anything about another transactions)
+# - durability (all of the transaction results should be permanent if it is complete)
