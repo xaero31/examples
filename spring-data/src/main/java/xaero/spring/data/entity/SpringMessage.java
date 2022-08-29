@@ -26,4 +26,9 @@ public class SpringMessage {
     private String message;
     @Version
     private long version;
+
+    public SpringMessage(long id, String message) {
+        this.id = id;
+        this.message = message;
+    }
 }
