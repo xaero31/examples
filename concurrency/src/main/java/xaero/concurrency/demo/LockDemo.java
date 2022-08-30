@@ -1,17 +1,56 @@
 package xaero.concurrency.demo;
 
+import io.vavr.control.Try;
 import lombok.extern.java.Log;
 
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.StampedLock;
 
 @Log
 public class LockDemo {
 
     public static void main(String[] args) {
+        testReentrantLockWithFewEntries();
+    }
 
+    /**
+     * demonstrates that if we got a lock 2 times from one thread - then we could unlock it 2 times too for completely
+     * free the lock
+     */
+    private static void testReentrantLockWithFewEntries() {
+        final var lock = new ReentrantLock();
+        final var executorService = Executors.newFixedThreadPool(4);
+
+        final Runnable runnable = () -> {
+            try {
+                log.info("start thread [" + Thread.currentThread().getName() + "]");
+
+                lock.lock();
+                log.info("got lock [" + Thread.currentThread().getName() + "]");
+                Try.run(() -> Thread.sleep(15000L));
+
+                try {
+                    lock.lock();
+                    log.info("got second lock [" + Thread.currentThread().getName() + "]");
+                    Try.run(() -> Thread.sleep(15000L));
+                } finally {
+                    lock.unlock();
+                    log.info("free second lock [" + Thread.currentThread().getName() + "]");
+                    Try.run(() -> Thread.sleep(15000L));
+                }
+            } finally {
+                lock.unlock();
+                log.info("free lock [" + Thread.currentThread().getName() + "]");
+                Try.run(() -> Thread.sleep(15000L));
+            }
+        };
+
+        executorService.submit(runnable);
+        executorService.submit(runnable);
     }
 
     private void lockMethods(Lock lock) throws InterruptedException {
