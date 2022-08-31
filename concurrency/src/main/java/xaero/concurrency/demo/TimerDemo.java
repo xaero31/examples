@@ -10,11 +10,13 @@ import java.util.concurrent.TimeUnit;
 @Log
 public class TimerDemo {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         final var timer = new Timer();
         // timer.schedule(new TimerDemoTask(), 0L, 2000L);
         timer.scheduleAtFixedRate(new TimerDemoTask(), 0L, 2000L);
         log.info("end");
+        TimeUnit.SECONDS.sleep(20L);
+        timer.cancel();
     }
 
     @Log
