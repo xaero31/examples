@@ -1,0 +1,23 @@
+# types of GCs
+# - serial (single threaded and slowest of all, can stop the application unexpectedly '-XX:+UseSerialGC')
+
+# - parallel (default gc for jvm. has multithreading but freezes application threads when collecting a garbage. if we
+#   use this GC, we can specify maximum garbage collection threads and pause time, throughput, and footprint (heap size)
+#   jvm param for enabling parallel gc => '-XX:+UseParallelGC'
+#   jvm param for threads count => '-XX:ParallelGCThreads=<N>'
+#   jvm param for max pause time between two gc in ms => '-XX:MaxGCPauseMillis=<N>'
+#   jvm param for rate gc time vs out of gc time => '-XX:GCTimeRatio=<N>'
+#   foe example, 19 sets a goal of 5% of the total time for GC and throughput goal of 95%
+#   jvm param for heap size => '-Xmx<N>')
+
+# - cms (uses multiple gc threads. app respond slower in average, but also have smaller gc pauses. deprecated since v.9
+#   If more than 98% of the total time is spent in CMS garbage collection, and less than 2% of the heap is recovered,
+#   then an OutOfMemoryError is thrown by the CMS collector. If necessary, we can disable this feature by adding
+#   the option -XX:-UseGCOverheadLimit to the command line.
+#   jvm param for enabling gc => '-XX:+UseParNewGC')
+
+# - g1 (split heap into few equal spaces, first marking state, then sweep state
+#   jvm param for enabling gc => '-XX:+UseG1GC')
+
+# - z (performs more expensive work concurrently without stopping the execution of application threads for more
+#   than 10 ms)
