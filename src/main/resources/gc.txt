@@ -14,10 +14,14 @@
 #   If more than 98% of the total time is spent in CMS garbage collection, and less than 2% of the heap is recovered,
 #   then an OutOfMemoryError is thrown by the CMS collector. If necessary, we can disable this feature by adding
 #   the option -XX:-UseGCOverheadLimit to the command line.
-#   jvm param for enabling gc => '-XX:+UseParNewGC')
+#   jvm param for enabling gc => '-XX:+UseConcMarkSweepGC')
 
 # - g1 (split heap into few equal spaces, first marking state, then sweep state
 #   jvm param for enabling gc => '-XX:+UseG1GC')
 
 # - z (performs more expensive work concurrently without stopping the execution of application threads for more
 #   than 10 ms)
+
+# jvm params for tuning the gc
+# - '-Xms<heap size>[unit]' and '-Xmx<heap size>[unit]' - minimum and maximum heap size. example: -Xms2G -Xmx5G
+# - '-XX:NewSize=<young size>[unit]' and '-XX:MaxNewSize=<young size>[unit]' - min and max young generation size
