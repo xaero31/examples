@@ -20,8 +20,34 @@
 #   jvm param for enabling gc => '-XX:+UseG1GC')
 
 # - z (performs more expensive work concurrently without stopping the execution of application threads for more
-#   than 10 ms)
+#   than 10 ms. -XX:+UnlockExperimentalVMOptions -XX:+UseZGC)
+
+# - epsilon (experimental since java 11. to enable: -XX:+UnlockExperimentalVMOptions -XX:+UseEpsilonGC. this gc doesn't
+#   reclaim memory from garbage objects. we can use it for benchmarking an application, for example)
 
 # jvm params for tuning the gc
 # - '-Xms<heap size>[unit]' and '-Xmx<heap size>[unit]' - minimum and maximum heap size. example: -Xms2G -Xmx5G
 # - '-XX:NewSize=<young size>[unit]' and '-XX:MaxNewSize=<young size>[unit]' - min and max young generation size
+
+# other jvm params
+# -XX:+HeapDumpOnOutOfMemoryError - activate dump writing on out of memory
+# -XX:HeapDumpPath=./java_pid<pid>.hprof - filepath to dump
+# -XX:OnOutOfMemoryError="< cmd args >;< cmd args >" command to run on out of memory error
+# -XX:+UseGCOverheadLimit - time before throw an out of memory error
+
+# gc logging
+# java 8 and earlier:
+# - -XX:+PrintGC - enable logging just events of gc
+# - -XX:+PrintGCDetails - logs additional info about gc events
+# - -XX:+PrintGCDateStamps - add date of gc at line start
+# - -XX:+PrintGCTimeStamps - add timestamp from jvm start in ms at gc line start
+# - -Xloggc or -Xloggc:file - redirects gc logs to a file
+# java 9 and later
+# - -XX:PrintGC is deprecated
+# - -Xlog - unified param (variants can be much more, such as '::time' or others)
+#   -Xlog:logging=debug - specify log level
+#   -Xlog:gc*=debug:file=/tmp/gc.log - specify gc debug messages to a file
+#   -Xlog:gc*=debug:stdout -Xlog:gc*=debug:file=/tmp/gc.log - this param is repeatable and we can specify few outputs
+# - log details commands: -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=50M -Xloggc:/home/gc.log
+
+# gc log analyser - https://gceasy.io/
