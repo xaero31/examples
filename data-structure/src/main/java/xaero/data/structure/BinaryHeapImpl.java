@@ -74,16 +74,18 @@ public class BinaryHeapImpl implements BinaryHeap {
             return;
         }
 
-        final var leftChild = getLeftChild(index);
-        if (leftChild > 0 && values[leftChild] < values[index]) {
-            swap(index, leftChild);
-            balanceDown(leftChild);
+        final var toBalanceChild = findBalanceDownChild(getLeftChild(index), getRightChild(index));
+        if (toBalanceChild > 0 && values[toBalanceChild] < values[index]) {
+            swap(index, toBalanceChild);
+            balanceDown(toBalanceChild);
         }
+    }
 
-        final var rightChild = getRightChild(index);
-        if (rightChild > 0 && values[rightChild] < values[index]) {
-            swap(index, rightChild);
-            balanceDown(rightChild);
+    private int findBalanceDownChild(int leftChild, int rightChild) {
+        if (leftChild < 0 || rightChild < 0 || values[leftChild] < values[rightChild]) {
+            return leftChild;
+        } else {
+            return rightChild;
         }
     }
 
