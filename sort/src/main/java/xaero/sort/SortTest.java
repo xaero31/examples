@@ -1,6 +1,6 @@
 package xaero.sort;
 
-import xaero.sort.impl.DanceQuickSort;
+import xaero.sort.impl.MergeSort;
 import xaero.sort.impl.QuickSort;
 
 import java.util.Arrays;
@@ -8,7 +8,8 @@ import java.util.Random;
 
 public class SortTest {
 
-    private static Sort sorter = new QuickSort();
+    // private static Sort sorter = new QuickSort();
+    private static Sort sorter = new MergeSort();
 
     public static void main(String[] args) {
         int[] array = getArray(10000);
