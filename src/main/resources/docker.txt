@@ -1,41 +1,67 @@
-## Docker files
-'.dockerignore' looks like '.gitignore' and specify files, which we don't want to include in docker container - https://docs.docker.com/engine/reference/builder/#dockerignore-file
-## for creating cluster of containers - https://docs.docker.com/compose/compose-file/
+# Docker files
+'.dockerignore' looks like '.gitignore' and specify files, which we don't want to include in docker
+container - https://docs.docker.com/engine/reference/builder/#dockerignore-file
+# for creating cluster of containers - https://docs.docker.com/compose/compose-file/
 compose.yaml or docker-compose.yaml
 
-## example of Dockerfile
+---
+
+# example of Dockerfile
+
+# this is main image of container from docker-hub
 FROM node
+# this cmd used like 'cd' in OS
 WORKDIR /usr/scr/app
+# obviously 'cp' into container from outside
 COPY somefile*.json ./
+# preparing bash command inside of container
 RUN npm install
+# again copy cmd
 COPY . .
+# used more for documentation, describes which port is used to outside from container
 EXPOSE 8080
+# command to set environment variable
+ENV param_name param_value
+# command to start running application inside of container, in other words - an entry point
 CMD ["npm", "start"]
 
-## docker build image
+---
+
+# docker build image. '-t' - image name and optional tag with colon 'name:tag', 
+# 'username' - namespace for image, '.' - path to dir with dockerfile
 docker build -t username/app-name .
-## list of docker images
+# list of docker images
 docker images
-## remove image
+# or
+docker image ls
+# remove image
 docker rmi {image_id}
-## run container
-docker run -p {port_number_in_container}:{port_number_locally_on_pc} username/app-name
-## list of running containers
+# create named volume
+docker volume create nameOfVolume
+# info about volume
+docker volume inspect nameOfVolume
+# run container. '-p' - port binding, '-d' - detached mode, in other words 'in background'
+docker run -d -p {port_number_on_host}:{port_number_in_container} username/app-name
+# run container with created named volume in docker. name 'user-files' and '/user-files' is a path inside of container
+docker run -dp 8080:8081 -v user-files:/user-files --name example example
+# run container with volume as path from host
+docker run -dp 8082:8081 -v /home/xaero:/user-files --name example example
+# list of running containers
 docker ps
-## stop docker container
+# stop docker container
 docker stop {container_name}
-## stop stucked docker container
+# stop stucked docker container
 docker kill {container_name}
-## push and pull image remote to docker account
+# push and pull image remote to docker account
 docker push {image_name}
 docker pull {image_name}
-## commands for docker compose. up - run in dir with 'compose.yaml' to run everything what is described in compose file
+# commands for docker compose. up - run in dir with 'compose.yaml' to run everything what is described in compose file
 docker-compose up
-## to specify which service could run first (detached from other services, just only one service in this command)
+# to specify which service could run first (detached from other services, just only one service in this command)
 docker-compose up -d {service_name}
-## to read logs from container
+# to read logs from container
 docker logs {container_name}
-## stop all of the containers
+# stop all of the containers
 docker-compose stop
-## build all images in docker-compose file
+# build all images in docker-compose file
 docker-compose build

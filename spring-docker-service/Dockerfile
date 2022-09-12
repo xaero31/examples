@@ -2,7 +2,7 @@ FROM openjdk:17
 
 ENV test.property hiFromDocker
 
-VOLUME user-files
+# VOLUME user-files
 WORKDIR /app
 COPY ./build/libs/docker-example.jar /app
 

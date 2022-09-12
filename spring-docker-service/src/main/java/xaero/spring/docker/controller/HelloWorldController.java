@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import static java.lang.System.getenv;
+import static java.nio.file.Files.readString;
 import static java.nio.file.Files.writeString;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static org.springframework.http.ResponseEntity.ok;
@@ -19,7 +20,7 @@ public class HelloWorldController {
 
     @GetMapping("/helloWorld")
     public ResponseEntity<String> helloWorld() {
-        return ok("hello world");
+        return ok("new version of hello world");
     }
 
     @GetMapping("/environment")
@@ -31,5 +32,10 @@ public class HelloWorldController {
     public ResponseEntity<String> write() throws IOException {
         writeString(Paths.get("/user-files/test.txt"), "text from application", CREATE);
         return ok("file is written");
+    }
+
+    @GetMapping("/read")
+    public ResponseEntity<String> read() throws IOException {
+        return ok(readString(Paths.get("/user-files/test.txt")));
     }
 }
