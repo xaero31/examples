@@ -1,0 +1,12 @@
+version: "3.7"
+name: test_name
+
+services:
+  producer:
+    image: producer
+  example:
+    image: example
+    ports:
+      - 8080:8081
+    volumes:
+      - /home/xaero:/user-files

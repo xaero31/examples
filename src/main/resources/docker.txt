@@ -60,6 +60,7 @@ docker kill {container_name}
 docker push {image_name}
 docker pull {image_name}
 # commands for docker compose. up - run in dir with 'compose.yaml' to run everything what is described in compose file
+# on linux with docker-desktop that command works without '-' like 'docker compose up'
 docker-compose up
 # to specify which service could run first (detached from other services, just only one service in this command)
 docker-compose up -d {service_name}
@@ -69,3 +70,8 @@ docker logs {container_name}
 docker-compose stop
 # build all images in docker-compose file
 docker-compose build
+# stop all containers and remove all images (with '--volumes' it additionally will remove named volumes used in compose)
+docker compose down --volumes
+
+# cmd for scanning image for vulnerabilities
+docker scan imageName
