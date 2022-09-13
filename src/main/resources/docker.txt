@@ -46,6 +46,10 @@ docker run -d -p {port_number_on_host}:{port_number_in_container} username/app-n
 docker run -dp 8080:8081 -v user-files:/user-files --name example example
 # run container with volume as path from host
 docker run -dp 8082:8081 -v /home/xaero:/user-files --name example example
+# run container with access from another container. first run producer, where alias - 'host' for this app (works at 8080)
+docker run -d --network example --network-alias producer --name producer producer
+# then run container-client with same network
+docker run -dp 8080:8081 -v /home/xaero:/user-files --network example --name example example
 # list of running containers
 docker ps
 # stop docker container
