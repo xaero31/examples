@@ -30,7 +30,7 @@ public class CollectionTimeToCreateTest {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 99999; i++) {
             final List<Integer> collectionsList = new ArrayList<>();
-            Collections.addAll(Arrays.asList(ints));
+            Collections.addAll(collectionsList, ints);
         }
         System.out.println("collections list execute time: " + (System.currentTimeMillis() - start));
     }
