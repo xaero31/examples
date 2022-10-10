@@ -1,11 +1,3 @@
--	Collections.addAll() работает быстрее чем new ArrayList(args) при чем во много раз
-
-collections list execute time: 9
-constructor list execute time: 6614
-
-constructor list execute time: 6707
-collections list execute time: 2
-
 - В коллекцию полученную Arrays.asList() нельзя добавить элементы через add() - получим UnsupportedOperationException.
 
 - Arrays.asList() может путаться в типах аргументов, если наследование через несколько поколений. Обычно рассматривает
